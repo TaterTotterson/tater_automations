@@ -61,11 +61,22 @@ Once installed, a new automation action becomes available.
 
 ### Fields:
 - **Tool**  
-  Dropdown with `camera_event` and `doorbell_alert`
+  Dropdown with:
+  - `camera_event`
+  - `doorbell_alert`
+  - `events_query_brief`
+  - `weather_brief`
+  - `zen_greeting`
 - **Area** *(camera_event only, optional)*  
   Preset dropdown with common areas (plus custom input)
 - **Camera** *(camera_event only, optional)*  
   Camera entity dropdown from Home Assistant (`camera.*`)
+- **Timeframe / Query / Input Text Entity** *(events_query_brief, optional)*  
+  Optional selectors for event brief generation and writing into `input_text.*`
+- **Hours / Query / Input Text Entity** *(weather_brief, optional)*  
+  Optional selectors for weather brief generation and writing into `input_text.*`
+- **Include Date / Tone / Prompt Hint / Input Text Entity** *(zen_greeting, optional)*  
+  Optional selectors for zen greeting generation and output target
 
 ---
 
@@ -114,12 +125,71 @@ No arguments are sent for this tool from the Home Assistant action form.
 
 ---
 
+## 📋 Example: Events Query Brief Automation
+
+**Action**
+- Call Tater automation tool
+
+**Tool**
+```
+events_query_brief
+```
+
+**Timeframe**
+```
+today
+```
+
+**Area**
+```
+front yard
+```
+
+---
+
+## 🌤 Example: Weather Brief Automation
+
+**Action**
+- Call Tater automation tool
+
+**Tool**
+```
+weather_brief
+```
+
+**Hours**
+```
+12
+```
+
+---
+
+## 🧘 Example: Zen Greeting Automation
+
+**Action**
+- Call Tater automation tool
+
+**Tool**
+```
+zen_greeting
+```
+
+**Tone**
+```
+zen
+```
+
+---
+
 ## 🧠 Supported Automation Plugins
 
 This integration is intended for **automation-only** Tater plugins, such as:
 
 - `camera_event`
 - `doorbell_alert`
+- `events_query_brief`
+- `weather_brief`
+- `zen_greeting`
 
 The tool name is always the **plugin name shown in the Tater WebUI**.
 

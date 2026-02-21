@@ -11,11 +11,24 @@ from homeassistant.helpers import aiohttp_client
 from .const import DOMAIN, CONF_HOST, CONF_PORT, DEFAULT_PORT, SERVICE_CALL_TOOL
 
 PLATFORMS: list[str] = []
-SELECTOR_STRING_FIELDS: tuple[str, ...] = ("area", "camera")
+STRING_ARGUMENT_FIELDS: tuple[str, ...] = (
+    "area",
+    "camera",
+    "timeframe",
+    "query",
+    "input_text_entity",
+    "tone",
+    "prompt_hint",
+)
+INTEGER_ARGUMENT_FIELDS: tuple[str, ...] = ("hours",)
+BOOLEAN_ARGUMENT_FIELDS: tuple[str, ...] = ("include_date",)
 
 TOOL_ALLOWED_ARGUMENTS: dict[str, set[str]] = {
     "camera_event": {"area", "camera"},
     "doorbell_alert": set(),
+    "events_query_brief": {"area", "timeframe", "query", "input_text_entity"},
+    "weather_brief": {"hours", "query", "input_text_entity"},
+    "zen_greeting": {"include_date", "tone", "prompt_hint", "input_text_entity"},
 }
 
 async def async_setup(hass: HomeAssistant, config: Dict[str, Any]) -> bool:
@@ -26,6 +39,30 @@ async def async_setup_entry(hass: HomeAssistant, entry) -> bool:
     port = entry.data.get(CONF_PORT, DEFAULT_PORT)
 
     session = aiohttp_client.async_get_clientsession(hass)
+
+    def _coerce_bool(field: str, value: Any) -> bool:
+        if isinstance(value, bool):
+            return value
+        if isinstance(value, int):
+            return bool(value)
+        normalized = str(value).strip().lower()
+        if normalized in {"1", "true", "yes", "y", "on", "enabled"}:
+            return True
+        if normalized in {"0", "false", "no", "n", "off", "disabled"}:
+            return False
+        raise HomeAssistantError(f"{field} must be true/false")
+
+    def _coerce_value(field: str, value: Any) -> Any:
+        if field in STRING_ARGUMENT_FIELDS:
+            return str(value).strip()
+        if field in INTEGER_ARGUMENT_FIELDS:
+            try:
+                return int(value)
+            except (TypeError, ValueError) as e:
+                raise HomeAssistantError(f"{field} must be a whole number") from e
+        if field in BOOLEAN_ARGUMENT_FIELDS:
+            return _coerce_bool(field, value)
+        return value
 
     def _build_arguments(call: ServiceCall, tool: str) -> dict[str, Any]:
         arguments = call.data.get("arguments") or {}
@@ -39,15 +76,13 @@ async def async_setup_entry(hass: HomeAssistant, entry) -> bool:
             value = arguments.get(field)
             if value in (None, ""):
                 continue
-            merged_arguments[field] = str(value).strip()
+            merged_arguments[field] = _coerce_value(field, value)
 
-        for field in SELECTOR_STRING_FIELDS:
-            if field not in allowed_fields:
-                continue
+        for field in allowed_fields:
             value = call.data.get(field)
             if value in (None, ""):
                 continue
-            merged_arguments[field] = str(value).strip()
+            merged_arguments[field] = _coerce_value(field, value)
 
         return merged_arguments
 

@@ -1,5 +1,4 @@
 .DS_Store
 
 # Local plugin files not meant for this repo
-/plugins/camera_event.py
-/plugins/doorbell_alert.py
+/plugins/

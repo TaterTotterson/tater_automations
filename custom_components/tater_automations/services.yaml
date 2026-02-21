@@ -15,6 +15,12 @@ call_tool:
               value: camera_event
             - label: Doorbell Alert
               value: doorbell_alert
+            - label: Events Query Brief
+              value: events_query_brief
+            - label: Weather Brief
+              value: weather_brief
+            - label: Zen Greeting
+              value: zen_greeting
     area:
       name: Area
       description: Camera Event only. Common area presets.
@@ -51,3 +57,64 @@ call_tool:
       selector:
         entity:
           domain: camera
+    timeframe:
+      name: Timeframe
+      description: Events Query Brief only.
+      required: false
+      selector:
+        select:
+          mode: dropdown
+          custom_value: true
+          options:
+            - today
+            - yesterday
+            - last_24h
+    query:
+      name: Query
+      description: Events Query Brief / Weather Brief only.
+      required: false
+      selector:
+        text:
+    hours:
+      name: Hours
+      description: Weather Brief only.
+      required: false
+      selector:
+        number:
+          min: 1
+          max: 72
+          mode: box
+          step: 1
+    input_text_entity:
+      name: Input Text Entity
+      description: Optional output target for Events Query Brief, Weather Brief, or Zen Greeting.
+      required: false
+      selector:
+        entity:
+          domain: input_text
+    include_date:
+      name: Include Date
+      description: Zen Greeting only.
+      required: false
+      selector:
+        boolean:
+    tone:
+      name: Tone
+      description: Zen Greeting only.
+      required: false
+      selector:
+        select:
+          mode: dropdown
+          custom_value: true
+          options:
+            - zen
+            - calm
+            - gentle
+            - uplifting
+            - minimal
+    prompt_hint:
+      name: Prompt Hint
+      description: Zen Greeting only.
+      required: false
+      selector:
+        text:
