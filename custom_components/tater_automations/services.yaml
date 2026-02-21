@@ -1,30 +1,11 @@
-call_tool:
-  name: Call Tater automation tool
-  description: Call a tool on the Tater HA Automations bridge.
+call_camera_event:
+  name: Camera Event
+  description: Run the camera_event plugin.
   fields:
-    tool:
-      name: Tool
-      description: Select which automation plugin to run.
-      required: true
-      selector:
-        select:
-          mode: dropdown
-          custom_value: false
-          options:
-            - label: Camera Event
-              value: camera_event
-            - label: Doorbell Alert
-              value: doorbell_alert
-            - label: Events Query Brief
-              value: events_query_brief
-            - label: Weather Brief
-              value: weather_brief
-            - label: Zen Greeting
-              value: zen_greeting
     area:
       name: Area
-      description: Camera Event only. Common area presets.
-      required: false
+      description: Area label for the camera event.
+      required: true
       selector:
         select:
           mode: dropdown
@@ -52,14 +33,52 @@ call_tool:
             - attic
     camera:
       name: Camera
-      description: Camera Event only. Select from your Home Assistant camera entities.
-      required: false
+      description: Select from Home Assistant camera entities.
+      required: true
       selector:
         entity:
           domain: camera
+
+call_doorbell_alert:
+  name: Doorbell Alert
+  description: Run the doorbell_alert plugin.
+
+call_events_query_brief:
+  name: Events Query Brief
+  description: Run the events_query_brief plugin.
+  fields:
+    area:
+      name: Area
+      description: Optional area filter label.
+      required: false
+      selector:
+        select:
+          mode: dropdown
+          custom_value: true
+          options:
+            - front door
+            - back door
+            - side door
+            - porch
+            - driveway
+            - garage
+            - front yard
+            - back yard
+            - side yard
+            - patio
+            - deck
+            - gate
+            - living room
+            - kitchen
+            - dining room
+            - hallway
+            - office
+            - bedroom
+            - basement
+            - attic
     timeframe:
       name: Timeframe
-      description: Events Query Brief only.
+      description: Query window.
       required: false
       selector:
         select:
@@ -71,13 +90,25 @@ call_tool:
             - last_24h
     query:
       name: Query
-      description: Events Query Brief / Weather Brief only.
+      description: Optional guidance for the brief.
       required: false
       selector:
         text:
+    input_text_entity:
+      name: Input Text Entity
+      description: Optional output target helper.
+      required: false
+      selector:
+        entity:
+          domain: input_text
+
+call_weather_brief:
+  name: Weather Brief
+  description: Run the weather_brief plugin.
+  fields:
     hours:
       name: Hours
-      description: Weather Brief only.
+      description: Number of recent hours to summarize.
       required: false
       selector:
         number:
@@ -85,22 +116,33 @@ call_tool:
           max: 72
           mode: box
           step: 1
+    query:
+      name: Query
+      description: Optional guidance for the summary.
+      required: false
+      selector:
+        text:
     input_text_entity:
       name: Input Text Entity
-      description: Optional output target for Events Query Brief, Weather Brief, or Zen Greeting.
+      description: Optional output target helper.
       required: false
       selector:
         entity:
           domain: input_text
+
+call_zen_greeting:
+  name: Zen Greeting
+  description: Run the zen_greeting plugin.
+  fields:
     include_date:
       name: Include Date
-      description: Zen Greeting only.
+      description: Include today's date in the greeting.
       required: false
       selector:
         boolean:
     tone:
       name: Tone
-      description: Zen Greeting only.
+      description: Greeting style.
       required: false
       selector:
         select:
@@ -114,7 +156,45 @@ call_tool:
             - minimal
     prompt_hint:
       name: Prompt Hint
-      description: Zen Greeting only.
+      description: Optional prompt hint for message generation.
       required: false
       selector:
         text:
+    input_text_entity:
+      name: Input Text Entity
+      description: Optional output target helper.
+      required: false
+      selector:
+        entity:
+          domain: input_text
+
+call_tool:
+  name: Call Tater automation tool (legacy)
+  description: Generic fallback action. Prefer plugin-specific actions above.
+  fields:
+    tool:
+      name: Tool
+      description: Select which automation plugin to run.
+      required: true
+      selector:
+        select:
+          mode: dropdown
+          custom_value: false
+          options:
+            - label: Camera Event
+              value: camera_event
+            - label: Doorbell Alert
+              value: doorbell_alert
+            - label: Events Query Brief
+              value: events_query_brief
+            - label: Weather Brief
+              value: weather_brief
+            - label: Zen Greeting
+              value: zen_greeting
+    arguments:
+      name: Raw Arguments
+      description: Optional raw args object for advanced use.
+      advanced: true
+      required: false
+      selector:
+        object:

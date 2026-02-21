@@ -3,7 +3,7 @@
 **Tater Automations** is a Home Assistant custom integration that makes it easy to run
 *Tater automation plugins* directly from Home Assistant automations — **no YAML, no REST calls, no AI routing**.
 
-It provides a native **“Call Tater automation tool”** action in the Home Assistant UI.
+It provides native **plugin-specific actions** in the Home Assistant UI.
 
 This integration is designed to work with the **Tater Automations platform** and
 automation-only plugins like camera events, doorbell alerts, weather summaries, and event queries.
@@ -54,29 +54,22 @@ That’s it. No YAML required.
 
 ## ▶️ Using in Automations
 
-Once installed, a new automation action becomes available.
+Once installed, plugin-specific automation actions are available.
 
-### Action:
-**Call Tater automation tool**
+### Actions:
+- **Camera Event**
+  Fields: `area`, `camera`
+- **Doorbell Alert**
+  No fields (uses plugin defaults/settings)
+- **Events Query Brief**
+  Fields: `area`, `timeframe`, `query`, `input_text_entity`
+- **Weather Brief**
+  Fields: `hours`, `query`, `input_text_entity`
+- **Zen Greeting**
+  Fields: `include_date`, `tone`, `prompt_hint`, `input_text_entity`
 
-### Fields:
-- **Tool**  
-  Dropdown with:
-  - `camera_event`
-  - `doorbell_alert`
-  - `events_query_brief`
-  - `weather_brief`
-  - `zen_greeting`
-- **Area** *(camera_event only, optional)*  
-  Preset dropdown with common areas (plus custom input)
-- **Camera** *(camera_event only, optional)*  
-  Camera entity dropdown from Home Assistant (`camera.*`)
-- **Timeframe / Query / Input Text Entity** *(events_query_brief, optional)*  
-  Optional selectors for event brief generation and writing into `input_text.*`
-- **Hours / Query / Input Text Entity** *(weather_brief, optional)*  
-  Optional selectors for weather brief generation and writing into `input_text.*`
-- **Include Date / Tone / Prompt Hint / Input Text Entity** *(zen_greeting, optional)*  
-  Optional selectors for zen greeting generation and output target
+There is also a **legacy fallback action** named **Call Tater automation tool (legacy)**
+if you still need a generic `tool + arguments` call.
 
 ---
 
@@ -86,12 +79,7 @@ Once installed, a new automation action becomes available.
 - Motion detected on a camera
 
 **Action**
-- Call Tater automation tool
-
-**Tool**
-```
-camera_event
-```
+- Camera Event
 
 **Area**
 ```
@@ -114,12 +102,7 @@ Tater will:
 ## 🔔 Example: Doorbell Alert Automation
 
 **Action**
-- Call Tater automation tool
-
-**Tool**
-```
-doorbell_alert
-```
+- Doorbell Alert
 
 No arguments are sent for this tool from the Home Assistant action form.
 
@@ -128,12 +111,7 @@ No arguments are sent for this tool from the Home Assistant action form.
 ## 📋 Example: Events Query Brief Automation
 
 **Action**
-- Call Tater automation tool
-
-**Tool**
-```
-events_query_brief
-```
+- Events Query Brief
 
 **Timeframe**
 ```
@@ -150,12 +128,7 @@ front yard
 ## 🌤 Example: Weather Brief Automation
 
 **Action**
-- Call Tater automation tool
-
-**Tool**
-```
-weather_brief
-```
+- Weather Brief
 
 **Hours**
 ```
@@ -167,12 +140,7 @@ weather_brief
 ## 🧘 Example: Zen Greeting Automation
 
 **Action**
-- Call Tater automation tool
-
-**Tool**
-```
-zen_greeting
-```
+- Zen Greeting
 
 **Tone**
 ```
