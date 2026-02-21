@@ -97,7 +97,7 @@ call_events_query_brief:
     input_text_entity:
       name: Input Text Entity
       description: Output target helper.
-      required: false
+      required: true
       selector:
         entity:
           domain: input_text
@@ -115,16 +115,16 @@ call_weather_brief:
           mode: dropdown
           custom_value: true
           options:
-            - 1
-            - 2
-            - 3
-            - 4
-            - 6
-            - 8
-            - 12
-            - 24
-            - 48
-            - 72
+            - "1"
+            - "2"
+            - "3"
+            - "4"
+            - "6"
+            - "8"
+            - "12"
+            - "24"
+            - "48"
+            - "72"
     query:
       name: Query
       description: Optional guidance for the summary.
@@ -134,7 +134,7 @@ call_weather_brief:
     input_text_entity:
       name: Input Text Entity
       description: Output target helper.
-      required: false
+      required: true
       selector:
         entity:
           domain: input_text
@@ -152,7 +152,7 @@ call_zen_greeting:
     tone:
       name: Tone
       description: Greeting style.
-      required: false
+      required: true
       selector:
         select:
           mode: dropdown
@@ -176,3 +176,34 @@ call_zen_greeting:
       selector:
         entity:
           domain: input_text
+
+call_tool:
+  name: Call Tater automation tool (legacy)
+  description: Generic fallback action. Prefer plugin-specific actions above.
+  fields:
+    tool:
+      name: Tool
+      description: Select which automation plugin to run.
+      required: true
+      selector:
+        select:
+          mode: dropdown
+          custom_value: false
+          options:
+            - label: Camera Event
+              value: camera_event
+            - label: Doorbell Alert
+              value: doorbell_alert
+            - label: Events Query Brief
+              value: events_query_brief
+            - label: Weather Brief
+              value: weather_brief
+            - label: Zen Greeting
+              value: zen_greeting
+    arguments:
+      name: Raw Arguments
+      description: Optional raw args object for advanced use.
+      advanced: true
+      required: false
+      selector:
+        object:
