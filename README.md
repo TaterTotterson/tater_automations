@@ -61,9 +61,11 @@ Once installed, a new automation action becomes available.
 
 ### Fields:
 - **Tool**  
-  Name of the automation plugin (exact name used in Tater)
-- **Arguments**  
-  Key/value pairs required by the tool
+  Dropdown with `camera_event` and `doorbell_alert`
+- **Area** *(camera_event only, optional)*  
+  Preset dropdown with common areas (plus custom input)
+- **Camera** *(camera_event only, optional)*  
+  Camera entity dropdown from Home Assistant (`camera.*`)
 
 ---
 
@@ -80,10 +82,14 @@ Once installed, a new automation action becomes available.
 camera_event
 ```
 
-**Arguments**
+**Area**
 ```
-area: front yard
-camera: camera.front_door_high
+front yard
+```
+
+**Camera**
+```
+camera.front_door_high
 ```
 
 That’s it.  
@@ -94,23 +100,17 @@ Tater will:
 
 ---
 
-## 🌤 Example: Weather Brief Automation
+## 🔔 Example: Doorbell Alert Automation
 
 **Action**
 - Call Tater automation tool
 
 **Tool**
 ```
-weather_brief
+doorbell_alert
 ```
 
-**Arguments**
-```
-hours: 12
-query: weather summary
-```
-
-Returns a short, dashboard-safe weather summary using Home Assistant sensors.
+No arguments are sent for this tool from the Home Assistant action form.
 
 ---
 
@@ -120,8 +120,6 @@ This integration is intended for **automation-only** Tater plugins, such as:
 
 - `camera_event`
 - `doorbell_alert`
-- `events_query_brief`
-- `weather_brief`
 
 The tool name is always the **plugin name shown in the Tater WebUI**.
 

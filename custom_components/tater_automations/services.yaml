@@ -3,10 +3,51 @@ call_tool:
   description: Call a tool on the Tater HA Automations bridge.
   fields:
     tool:
+      name: Tool
+      description: Select which automation plugin to run.
       required: true
       selector:
-        text:
-    arguments:
+        select:
+          mode: dropdown
+          custom_value: false
+          options:
+            - label: Camera Event
+              value: camera_event
+            - label: Doorbell Alert
+              value: doorbell_alert
+    area:
+      name: Area
+      description: Camera Event only. Common area presets.
       required: false
       selector:
-        object:
+        select:
+          mode: dropdown
+          custom_value: true
+          options:
+            - front door
+            - back door
+            - side door
+            - porch
+            - driveway
+            - garage
+            - front yard
+            - back yard
+            - side yard
+            - patio
+            - deck
+            - gate
+            - living room
+            - kitchen
+            - dining room
+            - hallway
+            - office
+            - bedroom
+            - basement
+            - attic
+    camera:
+      name: Camera
+      description: Camera Event only. Select from your Home Assistant camera entities.
+      required: false
+      selector:
+        entity:
+          domain: camera
