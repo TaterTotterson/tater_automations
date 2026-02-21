@@ -96,7 +96,7 @@ call_events_query_brief:
         text:
     input_text_entity:
       name: Input Text Entity
-      description: Optional output target helper.
+      description: Output target helper.
       required: false
       selector:
         entity:
@@ -111,11 +111,20 @@ call_weather_brief:
       description: Number of recent hours to summarize.
       required: false
       selector:
-        number:
-          min: 1
-          max: 72
-          mode: box
-          step: 1
+        select:
+          mode: dropdown
+          custom_value: true
+          options:
+            - 1
+            - 2
+            - 3
+            - 4
+            - 6
+            - 8
+            - 12
+            - 24
+            - 48
+            - 72
     query:
       name: Query
       description: Optional guidance for the summary.
@@ -124,7 +133,7 @@ call_weather_brief:
         text:
     input_text_entity:
       name: Input Text Entity
-      description: Optional output target helper.
+      description: Output target helper.
       required: false
       selector:
         entity:
@@ -162,7 +171,7 @@ call_zen_greeting:
         text:
     input_text_entity:
       name: Input Text Entity
-      description: Optional output target helper.
+      description: Output target helper.
       required: false
       selector:
         entity:

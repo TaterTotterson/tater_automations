@@ -64,7 +64,7 @@ Once installed, plugin-specific automation actions are available.
 - **Events Query Brief**
   Fields: `area`, `timeframe`, `query`, `input_text_entity`
 - **Weather Brief**
-  Fields: `hours`, `query`, `input_text_entity`
+  Fields: `hours` (predefined dropdown), `query`, `input_text_entity`
 - **Zen Greeting**
   Fields: `include_date`, `tone`, `prompt_hint`, `input_text_entity`
 
