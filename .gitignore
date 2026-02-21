@@ -2,3 +2,7 @@
 
 # Local plugin files not meant for this repo
 /plugins/
+
+# Python cache artifacts
+__pycache__/
+*.pyc
