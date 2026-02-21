@@ -68,9 +68,6 @@ Once installed, plugin-specific automation actions are available.
 - **Zen Greeting**
   Fields: `include_date`, `tone`, `prompt_hint`, `input_text_entity`
 
-There is also a **legacy fallback action** named **Call Tater automation tool (legacy)**
-if you still need a generic `tool + arguments` call.
-
 ---
 
 ## 🔧 Example: Camera Event Automation

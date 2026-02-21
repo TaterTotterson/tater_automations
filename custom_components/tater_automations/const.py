@@ -2,7 +2,6 @@ DOMAIN = "tater_automations"
 CONF_HOST = "host"
 CONF_PORT = "port"
 DEFAULT_PORT = 8788
-SERVICE_CALL_TOOL = "call_tool"
 SERVICE_CALL_CAMERA_EVENT = "call_camera_event"
 SERVICE_CALL_DOORBELL_ALERT = "call_doorbell_alert"
 SERVICE_CALL_EVENTS_QUERY_BRIEF = "call_events_query_brief"
