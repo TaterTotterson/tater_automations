@@ -1,0 +1,98 @@
+{
+  "services": {
+    "call_camera_event": {
+      "name": "Camera Event",
+      "description": "Run the camera_event plugin.",
+      "fields": {
+        "area": {
+          "name": "Area",
+          "description": "Area label for the camera event."
+        },
+        "camera": {
+          "name": "Camera",
+          "description": "Select from Home Assistant camera entities."
+        }
+      }
+    },
+    "call_doorbell_alert": {
+      "name": "Doorbell Alert",
+      "description": "Run the doorbell_alert plugin."
+    },
+    "call_events_query_brief": {
+      "name": "Events Query Brief",
+      "description": "Run the events_query_brief plugin.",
+      "fields": {
+        "area": {
+          "name": "Area",
+          "description": "Area filter label."
+        },
+        "timeframe": {
+          "name": "Timeframe",
+          "description": "Query window."
+        },
+        "query": {
+          "name": "Query",
+          "description": "Guidance for the brief."
+        },
+        "input_text_entity": {
+          "name": "Input Text Entity",
+          "description": "Output target helper."
+        }
+      }
+    },
+    "call_weather_brief": {
+      "name": "Weather Brief",
+      "description": "Run the weather_brief plugin.",
+      "fields": {
+        "hours": {
+          "name": "Hours",
+          "description": "Number of recent hours to summarize."
+        },
+        "query": {
+          "name": "Query",
+          "description": "Guidance for the summary."
+        },
+        "input_text_entity": {
+          "name": "Input Text Entity",
+          "description": "Output target helper."
+        }
+      }
+    },
+    "call_zen_greeting": {
+      "name": "Zen Greeting",
+      "description": "Run the zen_greeting plugin.",
+      "fields": {
+        "include_date": {
+          "name": "Include Date",
+          "description": "Include today's date in the greeting."
+        },
+        "tone": {
+          "name": "Tone",
+          "description": "Greeting style."
+        },
+        "prompt_hint": {
+          "name": "Prompt Hint",
+          "description": "Prompt hint for message generation."
+        },
+        "input_text_entity": {
+          "name": "Input Text Entity",
+          "description": "Output target helper."
+        }
+      }
+    },
+    "call_tool": {
+      "name": "Call Tater automation tool (legacy)",
+      "description": "Generic fallback action. Prefer plugin-specific actions above.",
+      "fields": {
+        "tool": {
+          "name": "Tool",
+          "description": "Select which automation plugin to run."
+        },
+        "arguments": {
+          "name": "Raw Arguments",
+          "description": "Raw args object for advanced use."
+        }
+      }
+    }
+  }
+}

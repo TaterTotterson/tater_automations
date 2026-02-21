@@ -8,8 +8,6 @@ call_camera_event:
       required: true
       selector:
         select:
-          mode: dropdown
-          custom_value: true
           options:
             - front door
             - back door
@@ -37,7 +35,8 @@ call_camera_event:
       required: true
       selector:
         entity:
-          domain: camera
+          filter:
+            - domain: camera
 
 call_doorbell_alert:
   name: Doorbell Alert
@@ -53,8 +52,6 @@ call_events_query_brief:
       required: false
       selector:
         select:
-          mode: dropdown
-          custom_value: true
           options:
             - front door
             - back door
@@ -79,11 +76,9 @@ call_events_query_brief:
     timeframe:
       name: Timeframe
       description: Query window.
-      required: false
+      required: true
       selector:
         select:
-          mode: dropdown
-          custom_value: true
           options:
             - today
             - yesterday
@@ -100,7 +95,8 @@ call_events_query_brief:
       required: true
       selector:
         entity:
-          domain: input_text
+          filter:
+            - domain: input_text
 
 call_weather_brief:
   name: Weather Brief
@@ -109,11 +105,9 @@ call_weather_brief:
     hours:
       name: Hours
       description: Number of recent hours to summarize.
-      required: false
+      required: true
       selector:
         select:
-          mode: dropdown
-          custom_value: true
           options:
             - "1"
             - "2"
@@ -137,7 +131,8 @@ call_weather_brief:
       required: true
       selector:
         entity:
-          domain: input_text
+          filter:
+            - domain: input_text
 
 call_zen_greeting:
   name: Zen Greeting
@@ -155,8 +150,6 @@ call_zen_greeting:
       required: true
       selector:
         select:
-          mode: dropdown
-          custom_value: true
           options:
             - zen
             - calm
@@ -175,7 +168,8 @@ call_zen_greeting:
       required: false
       selector:
         entity:
-          domain: input_text
+          filter:
+            - domain: input_text
 
 call_tool:
   name: Call Tater automation tool (legacy)
@@ -187,8 +181,6 @@ call_tool:
       required: true
       selector:
         select:
-          mode: dropdown
-          custom_value: false
           options:
             - label: Camera Event
               value: camera_event
