@@ -4,7 +4,7 @@ import voluptuous as vol
 from homeassistant import config_entries
 from homeassistant.core import callback
 
-from .const import DOMAIN, CONF_HOST, CONF_PORT, DEFAULT_PORT
+from .const import DOMAIN, CONF_HOST, CONF_PORT, CONF_API_KEY, DEFAULT_PORT
 
 class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
     VERSION = 1
@@ -14,6 +14,7 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
             schema = vol.Schema({
                 vol.Required(CONF_HOST, default="10.4.20.173"): str,
                 vol.Required(CONF_PORT, default=DEFAULT_PORT): int,
+                vol.Optional(CONF_API_KEY, default=""): str,
             })
             return self.async_show_form(step_id="user", data_schema=schema)
 
@@ -31,10 +32,12 @@ class OptionsFlowHandler(config_entries.OptionsFlow):
 
     async def async_step_init(self, user_input=None):
         data = dict(self.config_entry.data)
+        data.update(self.config_entry.options or {})
         if user_input is None:
             schema = vol.Schema({
                 vol.Required(CONF_HOST, default=data.get(CONF_HOST, "10.4.20.173")): str,
                 vol.Required(CONF_PORT, default=data.get(CONF_PORT, DEFAULT_PORT)): int,
+                vol.Optional(CONF_API_KEY, default=data.get(CONF_API_KEY, "")): str,
             })
             return self.async_show_form(step_id="init", data_schema=schema)
 

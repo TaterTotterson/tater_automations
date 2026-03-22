@@ -47,8 +47,9 @@ After restart:
      (example: `10.4.20.173`)
    - **Port**: Automations platform port  
      (default: `8788`)
+   - **API Key** (optional): Tater portal API key if enabled on the Automations portal.
 
-That’s it. No YAML required.
+If API auth is disabled on Tater, leave API Key blank.
 
 ---
 

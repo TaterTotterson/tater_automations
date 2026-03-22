@@ -1,6 +1,7 @@
 DOMAIN = "tater_automations"
 CONF_HOST = "host"
 CONF_PORT = "port"
+CONF_API_KEY = "api_key"
 DEFAULT_PORT = 8788
 SERVICE_CALL_TOOL = "call_tool"
 SERVICE_CALL_CAMERA_EVENT = "call_camera_event"

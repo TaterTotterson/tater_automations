@@ -11,6 +11,7 @@ from homeassistant.helpers import aiohttp_client
 from .const import (
     CONF_HOST,
     CONF_PORT,
+    CONF_API_KEY,
     DEFAULT_PORT,
     DOMAIN,
     SERVICE_CALL_CAMERA_EVENT,
@@ -54,8 +55,11 @@ async def async_setup(hass: HomeAssistant, config: Dict[str, Any]) -> bool:
     return True
 
 async def async_setup_entry(hass: HomeAssistant, entry) -> bool:
-    host = entry.data.get(CONF_HOST)
-    port = entry.data.get(CONF_PORT, DEFAULT_PORT)
+    cfg = dict(entry.data)
+    cfg.update(entry.options or {})
+    host = cfg.get(CONF_HOST)
+    port = cfg.get(CONF_PORT, DEFAULT_PORT)
+    api_key = str(cfg.get(CONF_API_KEY) or "").strip()
 
     session = aiohttp_client.async_get_clientsession(hass)
 
@@ -110,12 +114,22 @@ async def async_setup_entry(hass: HomeAssistant, entry) -> bool:
     async def _post_tool(tool: str, arguments: dict[str, Any]):
         url = f"http://{host}:{port}/tater-ha/v1/tools/{tool}"
         payload = {"arguments": arguments}
+        request_kwargs: dict[str, Any] = {"json": payload, "timeout": 15}
+        if api_key:
+            request_kwargs["headers"] = {"X-Tater-Token": api_key}
 
         try:
-            async with session.post(url, json=payload, timeout=15) as resp:
+            async with session.post(url, **request_kwargs) as resp:
                 text = await resp.text()
                 if resp.status >= 400:
-                    raise HomeAssistantError(f"Tater tool call failed ({resp.status}): {text[:200]}")
+                    detail = text[:200]
+                    if resp.status in (401, 403):
+                        if api_key:
+                            auth_hint = "Invalid API key. Update Tater Automations integration settings."
+                        else:
+                            auth_hint = "API key required. Set it in Tater Automations integration settings."
+                        detail = f"{detail} {auth_hint}".strip() if detail else auth_hint
+                    raise HomeAssistantError(f"Tater tool call failed ({resp.status}): {detail}")
                 # Return value is not used by automations directly, but shows in traces/logs
                 try:
                     return json.loads(text) if text else {"ok": True}
