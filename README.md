@@ -1,3 +1,5 @@
+# This repo has been replaced by the Awareness Core, availible in the tater shop
+
 # 🥔 Tater Automations (Home Assistant)
 
 **Tater Automations** is a Home Assistant custom integration that makes it easy to run
